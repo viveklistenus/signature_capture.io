@@ -6,6 +6,7 @@
         #canvas {
             border: 1px solid #000;
         }
+        
         body {
             overflow: hidden;
         }
@@ -34,7 +35,7 @@
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseout', stopDrawing);
 
-    canvas.addEventListener('touchstart', startDrawingTouch);
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
     canvas.addEventListener('touchmove', drawTouch);
     canvas.addEventListener('touchend', stopDrawing);
 
@@ -62,7 +63,10 @@
         isDrawing = false;
     }
 
-    function startDrawingTouch(e) {
+    function handleTouchStart(e) {
+        if (e.touches.length === 1) {
+            e.preventDefault();
+        }
         const touch = e.touches[0];
         isDrawing = true;
         [lastX, lastY] = [touch.clientX, touch.clientY];
