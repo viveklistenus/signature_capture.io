@@ -31,7 +31,7 @@ The web page does not have any external dependencies. It uses HTML, CSS, and Jav
 
 The web page is compatible with modern web browsers that support HTML5 and JavaScript.
 
-## License
+## Live Link
 
-This project is licensed under the [MIT License](LICENSE).
+```https://viveklistenus.github.io/signature_capture.io/```
 
