@@ -2,7 +2,11 @@
 
 This web page allows users to draw their signature using a canvas element and save it as an image file. It provides a simple interface for capturing signatures digitally.
 
+![img](https://github.com/viveklistenus/signature_capture.io/assets/28853520/a496fa3b-09c6-4410-8c50-7dc25dedb620)
+
+
 ## Usage
+
 
 1. Open the `index.html` file in a web browser.
 2. Draw your signature using the canvas provided.
