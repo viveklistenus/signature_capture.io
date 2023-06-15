@@ -3,22 +3,63 @@
 <head>
     <title>Signature Capture</title>
     <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
         #canvas {
             border: 1px solid #000;
+            margin-bottom: 20px;
+            background-color: #fff;
         }
-        
-        body {
-            overflow: hidden;
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        #clearBtn {
+            background-color: #999;
+        }
+
+        #saveBtn {
+            background-color: #4caf50;
+        }
+
+        #colorPicker {
+            margin-bottom: 20px;
+        }
+
+        .interactive-text {
+            font-size: 18px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Signature Capture</h1>
-    <input type="color" id="colorPicker">
+    <div class="interactive-text">Draw your signature using the canvas:</div>
     <canvas id="canvas" width="400" height="200"></canvas>
     <br>
-    <button id="clearBtn">Clear</button>
-    <button id="saveBtn">Save</button>
+    <div class="interactive-text">Pick Color</div>
+    <input type="color" id="colorPicker">
+    <br>
+    <button id="clearBtn" class="btn">Clear</button>
+    <button id="saveBtn" class="btn">Save</button>
 
 <script>
     // Get canvas element and context
