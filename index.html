@@ -13,13 +13,15 @@
 
         h1 {
             color: #333;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         #canvas {
             border: 1px solid #000;
             margin-bottom: 20px;
             background-color: #fff;
-            max-width: 100%; /* Added */
+            max-width: 100%;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .btn {
@@ -31,6 +33,7 @@
             border: none;
             cursor: pointer;
             margin-right: 10px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         #clearBtn {
@@ -71,6 +74,11 @@
     <br>
     <div class="interactive-text">Pick Color</div>
     <input type="color" id="colorPicker">
+    <br>
+    <div class="interactive-text">Resolution (width x height)</div>
+    <input type="number" id="widthInput" placeholder="Width" step="1">
+    <input type="number" id="heightInput" placeholder="Height" step="1">
+    <br>
     <br>
     <button id="clearBtn" class="btn">Clear</button>
     <button id="saveBtn" class="btn">Save</button>
@@ -150,14 +158,19 @@
     }
 
     function saveSignature() {
-        // Create a new canvas with white background
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        const width = parseInt(widthInput.value) || canvas.width;
+        const height = parseInt(heightInput.value) || canvas.height;
+
+        // Create a new canvas with white background and desired resolution
         const newCanvas = document.createElement('canvas');
-        newCanvas.width = canvas.width;
-        newCanvas.height = canvas.height;
+        newCanvas.width = width;
+        newCanvas.height = height;
         const newContext = newCanvas.getContext('2d');
         newContext.fillStyle = '#fff';
         newContext.fillRect(0, 0, newCanvas.width, newCanvas.height);
-        newContext.drawImage(canvas, 0, 0);
+        newContext.drawImage(canvas, 0, 0, newCanvas.width, newCanvas.height);
 
         // Convert the new canvas to an image with signature color and white background
         const signatureImage = document.createElement('a');
