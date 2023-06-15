@@ -31,6 +31,10 @@
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseout', stopDrawing);
 
+    canvas.addEventListener('touchstart', startDrawingTouch);
+    canvas.addEventListener('touchmove', drawTouch);
+    canvas.addEventListener('touchend', stopDrawing);
+
     document.getElementById('clearBtn').addEventListener('click', clearCanvas);
     document.getElementById('saveBtn').addEventListener('click', saveSignature);
 
@@ -53,6 +57,24 @@
 
     function stopDrawing() {
         isDrawing = false;
+    }
+
+    function startDrawingTouch(e) {
+        const touch = e.touches[0];
+        isDrawing = true;
+        [lastX, lastY] = [touch.clientX, touch.clientY];
+    }
+
+    function drawTouch(e) {
+        if (!isDrawing) return;
+        const touch = e.touches[0];
+        context.beginPath();
+        context.moveTo(lastX, lastY);
+        context.lineTo(touch.clientX, touch.clientY);
+        context.strokeStyle = '#000';
+        context.lineWidth = 2;
+        context.stroke();
+        [lastX, lastY] = [touch.clientX, touch.clientY];
     }
 
     function clearCanvas() {
