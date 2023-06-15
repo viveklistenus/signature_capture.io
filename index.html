@@ -14,7 +14,7 @@
 </head>
 <body>
     <h1>Signature Capture</h1>
-    <h3>Under 100kb</h3>
+    <input type="color" id="colorPicker">
     <canvas id="canvas" width="400" height="200"></canvas>
     <br>
     <button id="clearBtn">Clear</button>
@@ -25,10 +25,15 @@
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
 
-    // Variables to track the position
+    // Variables to track the position and color
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
+    let signatureColor = '#000'; // Default color is black
+
+    // Color picker element
+    const colorPicker = document.getElementById('colorPicker');
+    colorPicker.addEventListener('input', updateSignatureColor);
 
     // Event listeners
     canvas.addEventListener('mousedown', startDrawing);
@@ -54,7 +59,7 @@
         context.beginPath();
         context.moveTo(lastX, lastY);
         context.lineTo(e.offsetX, e.offsetY);
-        context.strokeStyle = '#000';
+        context.strokeStyle = signatureColor;
         context.lineWidth = 2;
         context.stroke();
         [lastX, lastY] = [e.offsetX, e.offsetY];
@@ -79,7 +84,7 @@
         context.beginPath();
         context.moveTo(lastX, lastY);
         context.lineTo(touch.clientX, touch.clientY);
-        context.strokeStyle = '#000';
+        context.strokeStyle = signatureColor;
         context.lineWidth = 2;
         context.stroke();
         [lastX, lastY] = [touch.clientX, touch.clientY];
@@ -99,11 +104,15 @@
         newContext.fillRect(0, 0, newCanvas.width, newCanvas.height);
         newContext.drawImage(canvas, 0, 0);
 
-        // Convert the new canvas to an image with black signature and white background
+        // Convert the new canvas to an image with signature color and white background
         const signatureImage = document.createElement('a');
         signatureImage.href = newCanvas.toDataURL('image/jpeg', 1.0);
         signatureImage.download = 'signature.jpg';
         signatureImage.click();
+    }
+
+    function updateSignatureColor() {
+        signatureColor = colorPicker.value;
     }
 </script>
 </body>
