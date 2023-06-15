@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signature Capture</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Signature Capture</h1>
+    <canvas id="canvas" width="400" height="200"></canvas>
+    <br>
+    <button id="clearBtn">Clear</button>
+    <button id="saveBtn">Save</button>
+
+<script>
+    // Get canvas element and context
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    // Variables to track the position
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    // Event listeners
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    document.getElementById('clearBtn').addEventListener('click', clearCanvas);
+    document.getElementById('saveBtn').addEventListener('click', saveSignature);
+
+    // Functions
+    function startDrawing(e) {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+        context.beginPath();
+        context.moveTo(lastX, lastY);
+        context.lineTo(e.offsetX, e.offsetY);
+        context.strokeStyle = '#000';
+        context.lineWidth = 2;
+        context.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+    }
+
+    function clearCanvas() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function saveSignature() {
+        // Create a new canvas with white background
+        const newCanvas = document.createElement('canvas');
+        newCanvas.width = canvas.width;
+        newCanvas.height = canvas.height;
+        const newContext = newCanvas.getContext('2d');
+        newContext.fillStyle = '#fff';
+        newContext.fillRect(0, 0, newCanvas.width, newCanvas.height);
+        newContext.drawImage(canvas, 0, 0);
+
+        // Convert the new canvas to an image with black signature and white background
+        const signatureImage = document.createElement('a');
+        signatureImage.href = newCanvas.toDataURL('image/jpeg', 1.0);
+        signatureImage.download = 'signature.jpg';
+        signatureImage.click();
+    }
+</script>
+</body>
+</html>
